@@ -1,0 +1,123 @@
+version: '2.2'
+
+networks:
+  mynetwork:
+    name: mynetwork
+    attachable: true
+
+services:
+  load-balancer:
+    container_name: nginx-load-balancer-consistent-hashing
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/load-balancer/Dockerfile
+    image: nginx-load-balancer-consistent-hashing
+    ports:
+      - 8080:80
+      - 9090:9090
+    volumes:
+      - type: bind
+        source: ./services/load-balancer/nginx/conf.d
+        target: /etc/nginx/conf.d/
+    networks:
+      - mynetwork
+    depends_on:
+      - video-service-01
+
+  video-service-01:
+    container_name: video-service-01
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/video-service/Dockerfile
+    image: video-service
+    ports:
+      - 11001:80
+    volumes:
+      - type: bind
+        source: ./services/video-service/nginx
+        target: /etc/nginx/
+      - type: bind
+        source: ./services/video-service/nginx/conf.d
+        target: /etc/nginx/conf.d
+    networks:
+      - mynetwork
+    depends_on:
+      - video-service-02
+
+  video-service-02:
+    container_name: video-service-02
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/video-service/Dockerfile
+    image: video-service
+    ports:
+      - 11002:80
+    volumes:
+      - type: bind
+        source: ./services/video-service/nginx
+        target: /etc/nginx/
+      - type: bind
+        source: ./services/video-service/nginx/conf.d
+        target: /etc/nginx/conf.d
+    networks:
+      - mynetwork
+    depends_on:
+      - video-service-03
+
+  video-service-03:
+    container_name: video-service-03
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/video-service/Dockerfile
+    image: video-service
+    ports:
+      - 11003:80
+    volumes:
+      - type: bind
+        source: ./services/video-service/nginx
+        target: /etc/nginx/
+      - type: bind
+        source: ./services/video-service/nginx/conf.d
+        target: /etc/nginx/conf.d
+    networks:
+      - mynetwork
+    depends_on:
+      - video-service-04
+
+  video-service-04:
+    container_name: video-service-04
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/video-service/Dockerfile
+    image: video-service
+    ports:
+      - 11004:80
+    volumes:
+      - type: bind
+        source: ./services/video-service/nginx
+        target: /etc/nginx/
+      - type: bind
+        source: ./services/video-service/nginx/conf.d
+        target: /etc/nginx/conf.d
+    networks:
+      - mynetwork
+    depends_on:
+      - video-service-05
+
+  video-service-05:
+    container_name: video-service-05
+    build:
+      context: ./
+      dockerfile: ./docker/docker-files/video-service/Dockerfile
+    image: video-service
+    ports:
+      - 11005:80
+    volumes:
+      - type: bind
+        source: ./services/video-service/nginx
+        target: /etc/nginx/
+      - type: bind
+        source: ./services/video-service/nginx/conf.d
+        target: /etc/nginx/conf.d
+    networks:
+      - mynetwork
