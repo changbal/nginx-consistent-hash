@@ -10,6 +10,17 @@ This repo provides an example of how to configure a NGINX load balancer and test
 
 **Consistent Hashing** is a distributed hashing scheme that operates independently of the number of servers or objects in a **distributed hash table** by assigning them a position on an **abstract circle, or hash ring**. This allows **servers and objects to scale** without affecting the overall system.
 
+## Prerequisites
+
+- [Install and Run Docker](https://docs.docker.com/engine/install/)
+
+- [Download NGINX Plus license files](https://www.nginx.com/free-trial-request/), and copy them to `./docker/build-context/ssl/`
+
+  ```
+  nginx-repo.crt
+  nginx-repo.key
+  ```
+
 ## Getting Started
 
 - Run a NGINX load balancer and 5 sample video servcies as containers:
